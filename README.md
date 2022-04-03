@@ -32,3 +32,33 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Ben's notes
+
+Stack for cannolireviews.com
+
+Next.js and TypeScript for website code and logic
+- looks like hopefully i can export all the static content at build time so that
+it can be hosted in S3 and cloudfront
+
+three.js for 3D cannoli viewer
+- example here https://redstapler.co/add-3d-model-to-website-threejs/
+
+GitHub for source control
+GitHub actions for CI/CD
+
+AWS S3 and Cloudfront for hosting. There is nothing dynamic about the site,
+so I'd really love to avoid needing to spin up a server or lambdas, even though
+lambdas would be fun. Seems like Next.js is really optimized to just run on
+a lambda
+- helpful post about hosting on S3 https://sosnowski.dev/post/static-serverless-site-with-nextjs
+- might be helpful as well https://milli.is/blog/why-we-self-host-our-serverless-next-js-site-on-aws-with-terraform
+- for image optimization and usage of next/image component, I might need https://github.com/cyrilwanner/next-optimized-images
+- On second though, for ease of development and getting an MVP up and running, I should avoid the complexity of trying
+  to manage a bunch of AWS infrastructure. I should just use Heroky hobby tier
+  or set up a single AWS EC2 and deploy the node server to it. To keep memory
+  usage low, I can fetch the prismic content client-side
+
+Prismic.io for CMS to host the review posts
+
+Graphic design - use Mike's Pastry for inspiration https://www.mikespastry.com/
