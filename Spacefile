@@ -7,3 +7,7 @@ micros:
     primary: true
     run: uvicorn main:app
     dev: .venv/bin/uvicorn main:app --reload
+    public_routes:
+      - "/"
+      - "/reviews"
+      - "/reviews/*"
