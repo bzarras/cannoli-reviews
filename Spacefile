@@ -9,5 +9,5 @@ micros:
     dev: .venv/bin/uvicorn app.main:app --reload
     public_routes:
       - "/"
-      - "/reviews"
       - "/reviews/*"
+      - "/static/*"
