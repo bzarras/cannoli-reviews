@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Cannoli Reviews</h1>
-<p>Giving cannolis the attention they deserve</p>
-<h2>Reviews</h2>
-<ol>
+<div class="grid">
   {% for review in reviews %}
-    <li><a href="reviews/{{review.slug}}">{{review.name}}</a></li>
+    <a href="reviews/{{review.slug}}" class="review-card-link">
+      <div class="review-card">
+        <img src="{{ url_for('static', path='thumbnail_placeholder.png') }}" alt="Cannoli Thumbnail">
+        <p>{{review.date}}</p>
+        <h2>{{review.title}}</h2>
+        <p>{{review.location}}</p>
+      </div>
+    </a>
   {% endfor %}
-</ol>
+</div>
 {% endblock content %}

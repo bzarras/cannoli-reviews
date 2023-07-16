@@ -5,8 +5,8 @@ micros:
     src: ./
     engine: python3.9
     primary: true
-    run: uvicorn main:app
-    dev: .venv/bin/uvicorn main:app --reload
+    run: uvicorn app.main:app
+    dev: .venv/bin/uvicorn app.main:app --reload
     public_routes:
       - "/"
       - "/reviews"
