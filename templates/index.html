@@ -1,11 +1,12 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Cannoli Reviews. Giving cannolis the attention they deserve.">
-</head>
-<body>
-  <h1>Holy, Cannoli!</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Cannoli Reviews</h1>
+<p>Giving cannolis the attention they deserve</p>
+<h2>Reviews</h2>
+<ol>
+  {% for review in reviews %}
+    <li><a href="reviews/{{review.slug}}">{{review.name}}</a></li>
+  {% endfor %}
+</ol>
+{% endblock content %}
