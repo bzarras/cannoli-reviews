@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cannoli Reviews Admin</title>
+  <style>
+    .new-review-form {
+      border: 1px solid black;
+      padding: 24px;
+    }
+    .form-input {
+      margin-bottom: 12px;
+    }
+    .form-input label {
+      display: inline-block;
+      width: 128px;
+      vertical-align: top;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cannoli Reviews Admin</h1>
+  <div class="new-review-form">
+    <h2>New Review</h2>
+    <form action="/admin/review" method="post">
+      <div class="form-input">
+        <label for="title">Title: </label>
+        <input type="text" name="title" id="title" placeholder="Cannoli King" required>
+      </div>
+      <div class="form-input">
+        <label for="date">Date: </label>
+        <input type="date" name="date" id="date" required>
+      </div>
+      <div class="form-input">
+        <label for="location">Location: </label>
+        <input type="text" name="location" id="location" placeholder="Brooklyn, NY" required>
+      </div>
+      <div class="form-input">
+        <label for="slug">Slug: </label>
+        <input type="text" name="slug" id="slug" placeholder="canoli-king" required>
+      </div>
+      <div class="form-input">
+        <label for="summary">Summary: </label>
+        <textarea name="summary" id="summary" required></textarea>
+      </div>
+      <div class="form-input">
+        <label for="liked">What we liked: </label>
+        <textarea name="liked" id="liked" required></textarea>
+      </div>
+      <div class="form-input">
+        <label for="disliked">What could be better: </label>
+        <textarea name="disliked" id="liked" required></textarea>
+      </div>
+      <div class="form-input">
+        <label for="rating">Rating: </label>
+        <input type="number" name="rating" id="rating" step="0.1" min="0" max="10" required>
+      </div>
+      <div class="form-input">
+        <label for="tags">Tags: </label>
+        <textarea name="tags" id="tags" placeholder="Comma-separated list of tags..." required></textarea>
+      </div>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  
+</body>
+</html>

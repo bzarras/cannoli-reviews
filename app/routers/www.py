@@ -12,7 +12,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @router.get("/", response_class=HTMLResponse)
-def home(request: Request):
+async def home(request: Request):
     reviews = [r.model_dump() for r in get_all_reviews()]
     return templates.TemplateResponse("index.html", {
         "request": request,
@@ -22,7 +22,7 @@ def home(request: Request):
 
 
 @router.get("/reviews/{review_slug}", response_class=HTMLResponse)
-def get_review(request: Request, review_slug: str):
+async def get_review(request: Request, review_slug: str):
     reviews = get_all_reviews()
     valid_reviews = { r.slug for r in reviews }
     if review_slug not in valid_reviews:
