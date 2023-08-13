@@ -3,7 +3,7 @@
 # Check Python version
 REQUIRED_PYTHON_VERSION="3.11.4"
 
-if ! python3 -c "import sys; exit(0) if sys.version_info >= (3, 11, 4) else exit(1)"; then
+if ! python -c "import sys; exit(0) if sys.version_info >= (3, 11, 4) else exit(1)"; then
     echo "Required Python version $REQUIRED_PYTHON_VERSION or higher is not installed."
     exit 1
 fi
