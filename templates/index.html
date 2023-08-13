@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid">
+  {% for review in reviews %}
+    <a href="reviews/{{review.slug}}" class="review-card-link">
+      <div class="review-card">
+        <img src="/static/thumbnail_placeholder.png" alt="Cannoli Thumbnail">
+        <p>{{review.date}}</p>
+        <h2>{{review.title}}</h2>
+        <p>{{review.location}}</p>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% endblock content %}
