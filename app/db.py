@@ -14,7 +14,7 @@ mock_data = [
         rating=9.1,
         tags=["cannoli", "williamsburg", "brooklyn", "nyc", "dessert", "pastry", "foodie", "fuckthatsdelicious"]
     )
-] * 5
+] * 10
 
 
 def get_all_reviews() -> list[Review]:
