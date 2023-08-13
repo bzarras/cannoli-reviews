@@ -8,10 +8,36 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+      EC2_USER: ${{ secrets.EC2_USER }}
+      EC2_HOST: ${{ secrets.EC2_HOST }}
+      EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+      EC2_SG_ID: ${{ secrets.EC2_SG_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: $AWS_ACCESS_KEY_ID
+          aws-secret-access-key: $AWS_SECRET_ACCESS_KEY
+          aws-region: $AWS_REGION
+
+      - name: Get runner ip address
+        id: ip
+        uses: haythem/public-ip@v1.2
+      
+      - name: Whitelist runner ip address
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id $EC2_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
 
       - name: Deploy to EC2
         env:
@@ -21,3 +47,11 @@ jobs:
         run: |
           echo "$EC2_SSH_PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i "private_key.pem" $EC2_USER@$EC2_HOST 'bash -s' < _infra/deploy.sh
+
+      - name: Revoke runner ip address
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id $EC2_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
