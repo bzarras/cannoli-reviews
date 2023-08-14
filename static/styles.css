@@ -45,7 +45,8 @@ body {
 }
 
 .review-card {
-  border: 3px solid #4169E1;
+  /* border: 3px solid #4169E1; */
+  box-shadow: 0px 5px 10px lightgray;
   border-radius: 4px;
   padding: 12px;
   background-color: #fff;

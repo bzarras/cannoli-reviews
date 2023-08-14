@@ -2,4 +2,20 @@
 
 {% block content %}
 <h1>{{review.title}}</h1>
+<p>{{review.location}}</p>
+<p>{{review.date}}</p>
+<p>{{review.summary}}</p>
+<p><strong>What we liked:</strong> {{review.liked}}</p>
+<p><strong>What could be better:</strong> {{review.disliked}}</p>
+<p><strong>{{review.rating}}</strong> 🤌</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>
+  {% for tag in review.tags %}
+    <span>#{{tag}} </span>
+  {% endfor %}
+</p>
 {% endblock content%}
