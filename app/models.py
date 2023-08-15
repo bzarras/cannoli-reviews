@@ -11,4 +11,10 @@ class Review(BaseModel):
     liked: str
     disliked: str
     rating: float
+    img_url: str
     tags: list[str] = []
+
+    # not working for some reason
+    @property
+    def pretty_date(self):
+        return self.date.strftime("%B %d, %Y")

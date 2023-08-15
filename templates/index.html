@@ -5,7 +5,7 @@
   {% for review in reviews %}
     <a href="reviews/{{review.slug}}" class="review-card-link">
       <div class="review-card">
-        <img src="/static/thumbnail_placeholder.png" alt="Cannoli Thumbnail">
+        <img src="{{review.img_url}}" alt="Cannoli Thumbnail" width="323px" height="auto">
         <p>{{review.date}}</p>
         <h2>{{review.title}}</h2>
         <p>{{review.location}}</p>
