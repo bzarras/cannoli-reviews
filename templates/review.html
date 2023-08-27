@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="width: 100%; text-align: center;">
+<div class="review-img-container">
   <img src="{{review.img_url}}" alt="Cannoli" style="width: 646px; max-width: 100%;">
+  <div class="rating-badge">
+    <div class="rating-badge-inner">
+      <p style="display: block;">{{review.rating}}</p>
+    </div>
+  </div>
 </div>
-<div style="max-width: 646px; margin: auto;">
+<div class="review-body-container">
   <p>{{review.date}}</p>
   <h1>{{review.title}}</h1>
   <p>{{review.location}}</p>

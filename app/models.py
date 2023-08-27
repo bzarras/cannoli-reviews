@@ -1,5 +1,5 @@
 import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, field_serializer
 
 
 class Review(BaseModel):
@@ -14,7 +14,6 @@ class Review(BaseModel):
     img_url: str
     tags: list[str] = []
 
-    # not working for some reason
-    @property
-    def pretty_date(self):
-        return self.date.strftime("%B %d, %Y")
+    @field_serializer('date')
+    def serialize_date(self, date: datetime.date, _info):
+        return date.strftime("%B %d, %Y")
