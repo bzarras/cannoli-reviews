@@ -48,6 +48,7 @@ body {
   box-shadow: 5px 5px 0px lightgray;
   padding: 12px;
   background-color: #fff;
+  position: relative;
 }
 
 .review-card > h2 {
@@ -84,11 +85,11 @@ body {
 }
 
 .rating-badge {
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 50%;
-  background-color: goldenrod;
-  height: 80px;
-  width: 80px;
+  background-color: lightgreen;
+  height: 65px;
+  width: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,7 +101,7 @@ body {
 .rating-badge > .rating-badge-inner {
   border: 1px solid black;
   border-radius: 50%;
-  background-color: gold;
+  background-color: lightgreen;
   height: 65px;
   width: 65px;
   display: flex;
@@ -108,7 +109,7 @@ body {
   align-items: center;
 }
 
-.rating-badge-inner > p {
+.rating-badge p {
   font-size: 32px;
   font-weight: bold;
 }
