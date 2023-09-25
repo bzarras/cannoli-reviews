@@ -22,6 +22,7 @@
 </head>
 <body>
   <h1>Cannoli Reviews Admin</h1>
+  <a href="/"><p>Go to site</p></a>
   <div class="border">
     <h2>Images</h2>
     <ul>
@@ -44,7 +45,7 @@
   </div>
   <div class="border">
     <h2>New Review</h2>
-    <form action="/admin/reviews" method="post">
+    <form action="/admin/reviews?token={{token}}" method="post" enctype="multipart/form-data">
       <div class="form-input">
         <label for="title">Title: </label>
         <input type="text" name="title" id="title" placeholder="Cannoli King" required>
@@ -79,7 +80,7 @@
       </div>
       <div class="form-input">
         <label for="img_url">Image: </label>
-        <select name="img_url" id="img_url">
+        <select name="img_url" id="img_url" required>
           {% for img_url in img_urls %}
             <option value="{{img_url}}">{{img_url}}</option>
           {% endfor %}

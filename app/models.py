@@ -52,15 +52,15 @@ class Review(ReviewBase):
     @property
     def badge_color(self) -> str:
         if self.rating >= 9.0:
-            return "#3DA13D"
+            return "#3EB489"  # Mint
         elif self.rating >= 8.0:
             return "#78CC78"
         elif self.rating >= 7.0:
-            return "#FFE536"
+            return "#B2C248"  # Avocado Green
         elif self.rating >= 6.0:
-            return "#FFF29C"
+            return "#FAF884"  # Pastel Yellow
         else:
-            return "#FF5368"
+            return "#F08080"  # LightCoral
 
     @field_serializer('date')
     def serialize_date(self, date: datetime.date, _info):

@@ -1,7 +1,9 @@
 import datetime
-from typing import Annotated
+import os
+from typing import Annotated, Optional
 
 from fastapi import APIRouter, Depends, Form, Request, UploadFile
+from fastapi.exceptions import HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -15,19 +17,33 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
+def get_token(token: Optional[str] = None) -> str:
+    if token != os.getenv("ADMIN_TOKEN"):
+        raise HTTPException(status_code=403)
+    return token
+
 
 @router.get("/", response_class=HTMLResponse)
-async def admin_home(request: Request, db: Session = Depends(get_db)):
+async def admin_home(
+    request: Request,
+    db: Session = Depends(get_db),
+    token: str = Depends(get_token),
+):
     image_names = images.get_image_names(db)
     return templates.TemplateResponse("admin.html", {
         "request": request,
-        "img_urls": [f"/img/{n}" for n in image_names]
+        "img_urls": [f"/img/{n}" for n in image_names],
+        "token": token,
     })
 
 
 # TODO: need a way to protect against anyone being able to upload images
 @router.post("/images", response_class=RedirectResponse)
-async def create_image(file: UploadFile, db: Session = Depends(get_db)):
+async def create_image(
+    file: UploadFile,
+    db: Session = Depends(get_db),
+    token: str = Depends(get_token),
+):
     print(f"Uploading image {file.filename}")
 
     file_contents = await file.read()
@@ -39,7 +55,7 @@ async def create_image(file: UploadFile, db: Session = Depends(get_db)):
 
     images.create_image(db=db, image=image)
 
-    return RedirectResponse(url="/admin/", status_code=302)  # 302 is necessary to use GET
+    return RedirectResponse(url=f"/admin?token={token}", status_code=302)  # 302 is necessary to use GET
 
 
 @router.post("/reviews")
@@ -54,6 +70,7 @@ async def create_review(
     rating: Annotated[float, Form()],
     img_url: Annotated[str, Form()],
     db: Session = Depends(get_db),
+    token: str = Depends(get_token),
 ):
     review = ReviewCreate(
         title=title,
@@ -69,4 +86,4 @@ async def create_review(
 
     reviews.create_review(db=db, review=review)
 
-    return RedirectResponse(url="/admin/", status_code=302)
+    return RedirectResponse(url=f"/admin?token={token}", status_code=302)
