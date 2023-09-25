@@ -15,16 +15,6 @@
   <p><strong>What we liked:</strong> {{review.liked}}</p>
   <p><strong>What could be better:</strong> {{review.disliked}}</p>
   <p><strong>{{review.rating}}</strong> 🤌</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>
-    {% for tag in review.tags %}
-      <span>#{{tag}} </span>
-    {% endfor %}
-  </p>
 </div>
 
 {% endblock content%}

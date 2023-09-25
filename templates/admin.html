@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cannoli Reviews Admin</title>
   <style>
-    .new-review-form {
+    .border {
       border: 1px solid black;
       padding: 24px;
+      margin-bottom: 24px;
     }
     .form-input {
       margin-bottom: 12px;
@@ -21,9 +22,29 @@
 </head>
 <body>
   <h1>Cannoli Reviews Admin</h1>
-  <div class="new-review-form">
+  <div class="border">
+    <h2>Images</h2>
+    <ul>
+      {% for img_url in img_urls %}
+        <li>
+          <a href="{{img_url}}">{{img_url}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="border">
+    <h2>Upload Image</h2>
+    <form action="/admin/images" method="post" enctype="multipart/form-data">
+      <div class="form-input">
+        <label for="file">Image: </label>
+        <input id="file" name="file" type="file">
+      </div>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+  <div class="border">
     <h2>New Review</h2>
-    <form action="/admin/review" method="post">
+    <form action="/admin/reviews" method="post">
       <div class="form-input">
         <label for="title">Title: </label>
         <input type="text" name="title" id="title" placeholder="Cannoli King" required>
@@ -50,15 +71,19 @@
       </div>
       <div class="form-input">
         <label for="disliked">What could be better: </label>
-        <textarea name="disliked" id="liked" required></textarea>
+        <textarea name="disliked" id="disliked" required></textarea>
       </div>
       <div class="form-input">
         <label for="rating">Rating: </label>
         <input type="number" name="rating" id="rating" step="0.1" min="0" max="10" required>
       </div>
       <div class="form-input">
-        <label for="tags">Tags: </label>
-        <textarea name="tags" id="tags" placeholder="Comma-separated list of tags..." required></textarea>
+        <label for="img_url">Image: </label>
+        <select name="img_url" id="img_url">
+          {% for img_url in img_urls %}
+            <option value="{{img_url}}">{{img_url}}</option>
+          {% endfor %}
+        </select>
       </div>
       <input type="submit" value="Submit">
     </form>

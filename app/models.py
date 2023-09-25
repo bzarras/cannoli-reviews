@@ -1,8 +1,34 @@
 import datetime
-from pydantic import BaseModel, computed_field, field_serializer
+from pydantic import BaseModel, ConfigDict, computed_field, field_serializer
 
 
-class Review(BaseModel):
+class ImageBase(BaseModel):
+    name: str
+    data: bytes
+
+
+class ImageCreate(ImageBase):
+    pass
+
+
+class Image(ImageBase):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+
+    @computed_field
+    @property
+    def type(self) -> str:
+        _, extension = self.name.split(".")
+        ext_lower = extension.lower()
+        if ext_lower in ["jpg", "jpeg"]:
+            return "jpeg"
+        elif ext_lower == "png":
+            return "png"
+        else:
+            raise ValueError("image doesn't have a valid type")
+
+
+class ReviewBase(BaseModel):
     title: str
     location: str
     date: datetime.date
@@ -12,7 +38,15 @@ class Review(BaseModel):
     disliked: str
     rating: float
     img_url: str
-    tags: list[str] = []
+
+
+class ReviewCreate(ReviewBase):
+    pass
+
+
+class Review(ReviewBase):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
 
     @computed_field
     @property
