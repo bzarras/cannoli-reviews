@@ -37,7 +37,6 @@ async def admin_home(
     })
 
 
-# TODO: need a way to protect against anyone being able to upload images
 @router.post("/images", response_class=RedirectResponse)
 async def create_image(
     file: UploadFile,
