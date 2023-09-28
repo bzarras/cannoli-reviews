@@ -85,6 +85,22 @@ body {
   padding: 0 12px;
 }
 
+.review-body-header {
+  margin-bottom: 36px;
+}
+
+.reivew-body-location {
+  margin-top: 12px;
+}
+
+.review-body-header h1 {
+  margin-bottom: 12px;
+}
+
+.review-body p {
+  margin-bottom: 22px;
+}
+
 .rating-badge {
   border: 2px solid black;
   color: #000;
