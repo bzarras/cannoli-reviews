@@ -1,4 +1,4 @@
-from sqlalchemy import BLOB, Column, Float, Integer, String
+from sqlalchemy import BLOB, Boolean, Column, Float, Integer, String
 
 from app.db import Base
 
@@ -24,4 +24,5 @@ class Review(Base):
     disliked = Column(String)
     rating = Column(Float)
     img_url = Column(String)
-
+    visible = Column(Boolean, default=True)
+    link = Column(String)

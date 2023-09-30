@@ -1,0 +1,12 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<h1>Reviews</h1>
+<ol>
+  {% for review in reviews %}
+    <li>
+      <a href="reviews/{{review.id}}?token={{token}}">{{review.title}}</a>
+    </li>
+  {% endfor %}
+</ol>
+{% endblock content %}

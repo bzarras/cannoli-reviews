@@ -1,0 +1,62 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<h1>Edit Review</h1>
+<div class="border">
+  <form action="/admin/reviews/{{review.id}}?token={{token}}" method="post" enctype="multipart/form-data">
+    <div class="form-input">
+      <label for="title">Title: </label>
+      <input type="text" name="title" id="title" value="{{review.title}}" required>
+    </div>
+    <div class="form-input">
+      <label for="date">Date: </label>
+      <input type="date" name="date" id="date" value="{{review.date}}" required>
+    </div>
+    <div class="form-input">
+      <label for="location">Location: </label>
+      <input type="text" name="location" id="location" value="{{review.location}}" required>
+    </div>
+    <div class="form-input">
+      <label for="slug">Slug: </label>
+      <input type="text" name="slug" id="slug" value="{{review.slug}}" required>
+    </div>
+    <div class="form-input">
+      <label for="summary">Summary: </label>
+      <textarea name="summary" id="summary" required>{{review.summary}}</textarea>
+    </div>
+    <div class="form-input">
+      <label for="liked">What we liked: </label>
+      <textarea name="liked" id="liked" required>{{review.liked}}</textarea>
+    </div>
+    <div class="form-input">
+      <label for="disliked">What could be better: </label>
+      <textarea name="disliked" id="disliked" required>{{review.disliked}}</textarea>
+    </div>
+    <div class="form-input">
+      <label for="rating">Rating: </label>
+      <input type="number" name="rating" id="rating" step="0.1" min="0" max="10" value="{{review.rating}}" required>
+    </div>
+    <div class="form-input">
+      <label for="img_url">Image: </label>
+      <select name="img_url" id="img_url" required>
+        {% for img_url in img_urls %}
+          {% if img_url == review.img_url %}
+            <option value="{{img_url}}" selected>{{img_url}}</option>
+          {% else %}
+            <option value="{{img_url}}">{{img_url}}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-input">
+      <label for="visible">Visible: </label>
+      <input type="checkbox" name="visible" id="visible" value="{{review.visible or False}}">
+    </div>
+    <div class="form-input">
+      <label for="link">Link: </label>
+      <input type="text" name="link" id="link" value="{{review.link}}">
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+{% endblock content %}

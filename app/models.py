@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 from pydantic import BaseModel, ConfigDict, computed_field, field_serializer
 
 
@@ -38,6 +39,8 @@ class ReviewBase(BaseModel):
     disliked: str
     rating: float
     img_url: str
+    visible: bool
+    link: Optional[str]
 
 
 class ReviewCreate(ReviewBase):

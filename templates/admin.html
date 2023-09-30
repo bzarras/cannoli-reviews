@@ -1,34 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cannoli Reviews Admin</title>
-  <style>
-    .border {
-      border: 1px solid black;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .form-input {
-      margin-bottom: 12px;
-    }
-    .form-input label {
-      display: inline-block;
-      width: 128px;
-      vertical-align: top;
-    }
-  </style>
-</head>
-<body>
+{% extends "admin_base.html" %}
+
+{% block content %}
   <h1>Cannoli Reviews Admin</h1>
-  <a href="/"><p>Go to site</p></a>
+  <nav>
+    <ul>
+      <li><a href="/">Go to site</a></li>
+      <li><a href="reviews?token={{token}}">Reviews</a></li>
+    </ul>  
+  </nav>
   <div class="border">
     <h2>Images</h2>
     <ul>
       {% for img_url in img_urls %}
-        <li>
-          <a href="{{img_url}}">{{img_url}}</a>
+        <li style="display: inline-block;">
+          <a href="{{img_url}}">
+            <img src="{{img_url}}" title="{{img_url}}" alt="Cannoli Thumbnail" width="100px">
+          </a>
         </li>
       {% endfor %}
     </ul>
@@ -89,6 +76,4 @@
       <input type="submit" value="Submit">
     </form>
   </div>
-  
-</body>
-</html>
+{% endblock content %}

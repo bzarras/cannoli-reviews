@@ -10,12 +10,12 @@ from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.managers import images, reviews
-from app.models import ReviewCreate, ImageCreate
-
+from app.models import Review, ReviewCreate, ImageCreate
 
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
+
 
 def get_token(token: Optional[str] = None) -> str:
     if token != os.getenv("ADMIN_TOKEN"):
@@ -85,4 +85,72 @@ async def create_review(
 
     reviews.create_review(db=db, review=review)
 
+    return RedirectResponse(url=f"/admin?token={token}", status_code=302)
+
+
+@router.get("/reviews")
+async def get_reviews(
+    request: Request,
+    db: Session = Depends(get_db),
+    token: str = Depends(get_token),
+):
+    db_reviews = reviews.get_all_reviews(db=db)
+    return templates.TemplateResponse("admin_reviews.html", {
+        "request": request,
+        "reviews": db_reviews,
+        "token": token,
+    })
+
+
+@router.get("/reviews/{review_id}")
+async def get_review(
+    request: Request,
+    review_id: int,
+    db: Session = Depends(get_db),
+    token: str = Depends(get_token),
+):
+    review = reviews.get_review_by_id(db=db, id=review_id)
+    image_names = images.get_image_names(db)
+    if not review:
+        raise HTTPException(status_code=404)
+    return templates.TemplateResponse("admin_edit_review.html", {
+        "request": request,
+        "review": review,
+        "img_urls": [f"/img/{n}" for n in image_names],
+        "token": token
+    })
+
+
+@router.post("/reviews/{review_id}")
+async def update_review(
+    review_id: int,
+    title: Annotated[str, Form()],
+    location: Annotated[str, Form()],
+    date: Annotated[datetime.date, Form()],
+    slug: Annotated[str, Form()],
+    summary: Annotated[str, Form()],
+    liked: Annotated[str, Form()],
+    disliked: Annotated[str, Form()],
+    rating: Annotated[float, Form()],
+    img_url: Annotated[str, Form()],
+    visible: Annotated[Optional[bool], Form()],
+    link: Annotated[str, Form()],
+    db: Session = Depends(get_db),
+    token: str = Depends(get_token),
+):
+    review = Review(
+        id=review_id,
+        title=title,
+        location=location,
+        date=date,
+        slug=slug,
+        summary=summary,
+        liked=liked,
+        disliked=disliked,
+        rating=rating,
+        img_url=img_url,
+        visible=True if visible else False,
+        link=link,
+    )
+    reviews.update_review(db=db, review=review)
     return RedirectResponse(url=f"/admin?token={token}", status_code=302)
