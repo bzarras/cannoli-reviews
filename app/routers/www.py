@@ -16,7 +16,7 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def home(request: Request, order_by: Optional[str] = None, db: Session = Depends(get_db)):
-    db_reviews = [r.model_dump() for r in reviews.get_all_reviews(db, order_by)]
+    db_reviews = [r.model_dump() for r in reviews.get_reviews(db, order_by)]
     return templates.TemplateResponse("index.html", {
         "request": request,
         "title": "Cannoli Reviews",

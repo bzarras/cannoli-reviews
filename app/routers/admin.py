@@ -94,7 +94,7 @@ async def get_reviews(
     db: Session = Depends(get_db),
     token: str = Depends(get_token),
 ):
-    db_reviews = reviews.get_all_reviews(db=db)
+    db_reviews = reviews.get_reviews(db=db, _all=True)
     return templates.TemplateResponse("admin_reviews.html", {
         "request": request,
         "reviews": db_reviews,
@@ -133,8 +133,8 @@ async def update_review(
     disliked: Annotated[str, Form()],
     rating: Annotated[float, Form()],
     img_url: Annotated[str, Form()],
-    visible: Annotated[Optional[bool], Form()],
     link: Annotated[str, Form()],
+    visible: Annotated[bool, Form()] = False,
     db: Session = Depends(get_db),
     token: str = Depends(get_token),
 ):
@@ -149,7 +149,7 @@ async def update_review(
         disliked=disliked,
         rating=rating,
         img_url=img_url,
-        visible=True if visible else False,
+        visible=visible,
         link=link,
     )
     reviews.update_review(db=db, review=review)

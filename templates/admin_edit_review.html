@@ -50,7 +50,7 @@
     </div>
     <div class="form-input">
       <label for="visible">Visible: </label>
-      <input type="checkbox" name="visible" id="visible" value="{{review.visible}}">
+      <input type="checkbox" name="visible" id="visible" value="True" {% if review.visible %}checked{% endif %}>
     </div>
     <div class="form-input">
       <label for="link">Link: </label>

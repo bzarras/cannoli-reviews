@@ -5,14 +5,21 @@ from sqlalchemy.orm import Session
 from app import tables, models
 
 
-def get_all_reviews(db: Session, order_by: Optional[str] = None) -> list[models.Review]:
+def get_reviews(
+    db: Session,
+    order_by: Optional[str] = None,
+    _all: bool = False
+) -> list[models.Review]:
     order = (
         tables.Review.rating.desc()
         if order_by == "rating"
         else tables.Review.date.desc()
     )
+    stmt = select(tables.Review)
+    if not _all:
+        stmt = stmt.where(tables.Review.visible == True)
     db_reviews = db.scalars(
-        select(tables.Review).order_by(order)
+        stmt.order_by(order)
     )
     return [models.Review.model_validate(dbr) for dbr in db_reviews]
 
