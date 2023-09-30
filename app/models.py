@@ -39,8 +39,8 @@ class ReviewBase(BaseModel):
     disliked: str
     rating: float
     img_url: str
-    visible: bool
-    link: Optional[str]
+    visible: bool = True
+    link: Optional[str] = None
 
 
 class ReviewCreate(ReviewBase):
