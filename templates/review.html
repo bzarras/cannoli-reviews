@@ -11,6 +11,9 @@
   <div class="review-body-header">
     <p>{{review.date}}</p>
     <h1>{{review.title}}</h1>
+    {% if review.link %}
+      <p><a href="{{review.link}}" target="_blank"><i>View on Google Maps</i></a></p>
+    {% endif %}
     <p class="reivew-body-location">{{review.location}}</p>
   </div>
   <div class="review-body">
