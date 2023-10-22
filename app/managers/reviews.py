@@ -10,11 +10,12 @@ def get_reviews(
     order_by: Optional[str] = None,
     _all: bool = False
 ) -> list[models.Review]:
-    order = (
-        tables.Review.rating.desc()
-        if order_by == "rating"
-        else tables.Review.date.desc()
-    )
+    if order_by == "rating":
+        order = tables.Review.rating.desc()
+    elif order_by == "title":
+        order= tables.Review.title.asc()
+    else:
+        order = tables.Review.date.desc()
     stmt = select(tables.Review)
     if not _all:
         stmt = stmt.where(tables.Review.visible == True)
