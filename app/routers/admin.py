@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import os
 from typing import Annotated, Optional
 
@@ -43,13 +44,16 @@ async def create_image(
     db: Session = Depends(get_db),
     token: str = Depends(get_token),
 ):
-    print(f"Uploading image {file.filename}")
+    if file.size > 10000000: # 10 MB limit, to avoid DDOS from hashing
+        raise HTTPException(status_code=400, detail="File cannot be larger than 10 MB")
 
     file_contents = await file.read()
+    etag = hashlib.md5(file_contents).hexdigest()
 
     image = ImageCreate(
         name=file.filename,
-        data=file_contents
+        data=file_contents,
+        etag=etag,
     )
 
     images.create_image(db=db, image=image)

@@ -1,11 +1,18 @@
 import datetime
 from typing import Optional
-from pydantic import BaseModel, ConfigDict, computed_field, field_serializer
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    computed_field,
+    Field,
+    field_serializer,
+)
 
 
 class ImageBase(BaseModel):
     name: str
     data: bytes
+    etag: str
 
 
 class ImageCreate(ImageBase):
@@ -15,6 +22,8 @@ class ImageCreate(ImageBase):
 class Image(ImageBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    created_at: datetime.datetime = Field(exclude=True)
+    updated_at: datetime.datetime = Field(exclude=True)
 
     @computed_field
     @property
@@ -50,6 +59,8 @@ class ReviewCreate(ReviewBase):
 class Review(ReviewBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    created_at: datetime.datetime = Field(exclude=True)
+    updated_at: datetime.datetime = Field(exclude=True)
 
     @computed_field
     @property

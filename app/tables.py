@@ -1,4 +1,13 @@
-from sqlalchemy import BLOB, Boolean, Column, Float, Integer, String
+import datetime
+from sqlalchemy import (
+    BLOB,
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    Integer,
+    String,
+)
 
 from app.db import Base
 
@@ -9,6 +18,18 @@ class Image(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, unique=True)
     data = Column(BLOB)
+    etag = Column(String)
+    created_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+    )
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow,
+    )
 
 
 class Review(Base):
@@ -26,3 +47,14 @@ class Review(Base):
     img_url = Column(String)
     visible = Column(Boolean, default=True)
     link = Column(String)
+    created_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+    )
+    updated_at = Column(
+        DateTime,
+        nullable=False,
+        default=datetime.datetime.utcnow,
+        onupdate=datetime.datetime.utcnow,
+    )

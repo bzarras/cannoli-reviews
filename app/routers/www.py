@@ -45,4 +45,15 @@ async def get_image(img_name: str, db: Session = Depends(get_db)):
     if not image:
         raise HTTPException(status_code=404, detail="Image not found")
     
-    return Response(content=image.data, media_type=f"image/{image.type}")
+    headers = {}
+    # these headers help with browser caching
+    if image.etag:
+        headers["Etag"] = image.etag
+    if image.updated_at:
+        headers["Last-Modified"] = image.updated_at.strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+    return Response(
+        content=image.data,
+        headers=headers,
+        media_type=f"image/{image.type}",
+    )

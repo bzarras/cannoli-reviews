@@ -21,7 +21,7 @@ def get_image_by_name(db: Session, name: str) -> Optional[models.Image]:
 
 
 def create_image(db: Session, image: models.ImageCreate) -> tables.Image:
-    db_image = tables.Image(name=image.name, data=image.data)
+    db_image = tables.Image(name=image.name, data=image.data, etag=image.etag)
     db.add(db_image)
     db.commit()
     db.refresh(db_image)
