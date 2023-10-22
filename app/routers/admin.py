@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.managers import images, reviews
-from app.models import Review, ReviewCreate, ImageCreate
+from app.models import ReviewUpdate, ReviewCreate, ImageCreate
 
 router = APIRouter()
 
@@ -142,7 +142,7 @@ async def update_review(
     db: Session = Depends(get_db),
     token: str = Depends(get_token),
 ):
-    review = Review(
+    review_update = ReviewUpdate(
         id=review_id,
         title=title,
         location=location,
@@ -156,5 +156,5 @@ async def update_review(
         visible=visible,
         link=link,
     )
-    reviews.update_review(db=db, review=review)
+    reviews.update_review(db=db, review_update=review_update)
     return RedirectResponse(url=f"/admin?token={token}", status_code=302)

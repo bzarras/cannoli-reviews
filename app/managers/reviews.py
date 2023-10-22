@@ -46,16 +46,17 @@ def create_review(db: Session, review: models.ReviewCreate) -> tables.Review:
     db.refresh(db_review)
     return db_review
 
+
 def update_review(
     db: Session,
-    review: models.Review
+    review_update: models.ReviewUpdate
 ) -> Optional[tables.Review]:
-    db_review = db_review = db.scalars(
-        select(tables.Review).where(tables.Review.id == review.id)
+    db_review = db.scalars(
+        select(tables.Review).where(tables.Review.id == review_update.id)
     ).first()
     if not db_review:
         return None
-    for k, v in review.__dict__.items():
+    for k, v in review_update.__dict__.items():
         if getattr(db_review, k) != v:
             setattr(db_review, k, v)
     db.add(db_review)
