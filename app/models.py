@@ -41,6 +41,8 @@ class Image(ImageBase):
 class ReviewBase(BaseModel):
     title: str
     location: str
+    latitude: float
+    longitude: float
     date: datetime.date
     slug: str
     summary: str
@@ -48,8 +50,8 @@ class ReviewBase(BaseModel):
     disliked: str
     rating: float
     img_url: str
+    link: str
     visible: bool = True
-    link: Optional[str] = None
 
 
 class ReviewCreate(ReviewBase):

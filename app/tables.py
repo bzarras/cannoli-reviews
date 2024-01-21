@@ -38,6 +38,8 @@ class Review(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     location = Column(String)
+    latitude = Column(Float)
+    longitude = Column(Float)
     date = Column(String)
     slug = Column(String, index=True)
     summary = Column(String)
