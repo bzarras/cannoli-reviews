@@ -65,6 +65,8 @@ async def create_image(
 async def create_review(
     title: Annotated[str, Form()],
     location: Annotated[str, Form()],
+    latitude: Annotated[float, Form()],
+    longitude: Annotated[float, Form()],
     date: Annotated[datetime.date, Form()],
     slug: Annotated[str, Form()],
     summary: Annotated[str, Form()],
@@ -72,19 +74,25 @@ async def create_review(
     disliked: Annotated[str, Form()],
     rating: Annotated[float, Form()],
     img_url: Annotated[str, Form()],
+    link: Annotated[str, Form()],
+    visible: Annotated[bool, Form()] = False,
     db: Session = Depends(get_db),
     token: str = Depends(get_token),
 ):
     review = ReviewCreate(
         title=title,
         location=location,
+        latitude=latitude,
+        longitude=longitude,
         date=date,
         slug=slug,
         summary=summary,
         liked=liked,
         disliked=disliked,
         rating=rating,
-        img_url=img_url
+        img_url=img_url,
+        visible=visible,
+        link=link,
     )
 
     reviews.create_review(db=db, review=review)
@@ -130,6 +138,8 @@ async def update_review(
     review_id: int,
     title: Annotated[str, Form()],
     location: Annotated[str, Form()],
+    latitude: Annotated[float, Form()],
+    longitude: Annotated[float, Form()],
     date: Annotated[datetime.date, Form()],
     slug: Annotated[str, Form()],
     summary: Annotated[str, Form()],
@@ -146,6 +156,8 @@ async def update_review(
         id=review_id,
         title=title,
         location=location,
+        latitude=latitude,
+        longitude=longitude,
         date=date,
         slug=slug,
         summary=summary,

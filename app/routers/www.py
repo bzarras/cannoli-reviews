@@ -8,10 +8,15 @@ from app.db import get_db
 from app.managers import images, reviews
 
 
+def _should_autoescape_html(template_name: str) -> bool:
+    if template_name == "map.html":
+        return False
+    return True
+
+
 router = APIRouter()
 
-
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="templates", autoescape=_should_autoescape_html)
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -21,6 +26,16 @@ async def home(request: Request, order_by: Optional[str] = None, db: Session = D
         "request": request,
         "title": "Cannoli Reviews",
         "reviews": db_reviews
+    })
+
+
+@router.get("/map", response_class=HTMLResponse)
+async def map_view(request: Request, db: Session = Depends(get_db)):
+    db_reviews_json = [r.model_dump_json() for r in reviews.get_reviews(db)]
+    return templates.TemplateResponse("map.html", {
+        "request": request,
+        "title": "Cannoli Reviews - Map",
+        "reviews_json": db_reviews_json
     })
 
 

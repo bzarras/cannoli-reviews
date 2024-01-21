@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<div id="map"></div>
+<script lang="js">
+  const reviewsStrings = {{reviews_json}};
+  const map = L.map('map').setView([40.7137213, -73.9487508], 12);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  reviewsStrings.forEach(reviewString => {
+    const review = JSON.parse(reviewString);
+    const marker = L.marker([review.latitude, review.longitude]).addTo(map);
+    marker.bindPopup(`<a href="/reviews/${review.slug}"><b>${review.title}</b></a><br>Rating: ${review.rating}`);
+  });
+</script>
+{% endblock content %}

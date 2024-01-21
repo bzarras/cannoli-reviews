@@ -113,3 +113,8 @@ body {
   font-weight: bold;
   display: block;
 }
+
+#map {
+  height: calc(100vh - 172px);
+  width: 100%;
+}

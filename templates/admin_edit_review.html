@@ -17,6 +17,14 @@
       <input type="text" name="location" id="location" value="{{review.location}}" required>
     </div>
     <div class="form-input">
+      <label for="latitude">Latitude: </label>
+      <input type="number" name="latitude" id="latitude" step="0.00000000001" value="{{review.latitude}}" required>
+    </div>
+    <div class="form-input">
+      <label for="longitude">Longitude: </label>
+      <input type="number" name="longitude" id="longitude" step="0.00000000001" value="{{review.longitude}}" required>
+    </div>
+    <div class="form-input">
       <label for="slug">Slug: </label>
       <input type="text" name="slug" id="slug" value="{{review.slug}}" required>
     </div>

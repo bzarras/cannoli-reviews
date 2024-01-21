@@ -46,6 +46,14 @@
         <input type="text" name="location" id="location" placeholder="Brooklyn, NY" required>
       </div>
       <div class="form-input">
+        <label for="latitude">Latitude: </label>
+        <input type="number" name="latitude" id="latitude" step="0.00000000001" placeholder="40.7137213" required>
+      </div>
+      <div class="form-input">
+        <label for="longitude">Longitude: </label>
+        <input type="number" name="longitude" id="longitude" step="0.00000000001" placeholder="-73.9461759" required>
+      </div>
+      <div class="form-input">
         <label for="slug">Slug: </label>
         <input type="text" name="slug" id="slug" placeholder="canoli-king" required>
       </div>
@@ -72,6 +80,14 @@
             <option value="{{img_url}}">{{img_url}}</option>
           {% endfor %}
         </select>
+      </div>
+      <div class="form-input">
+        <label for="visible">Visible: </label>
+        <input type="checkbox" name="visible" id="visible" value="True" checked>
+      </div>
+      <div class="form-input">
+        <label for="link">Link: </label>
+        <input type="text" name="link" id="link" placeholder="https://maps.app.goo.gl/m35GFbYSozHsvkGh6" required>
       </div>
       <input type="submit" value="Submit">
     </form>
