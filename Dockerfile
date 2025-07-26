@@ -24,9 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code and database
 COPY . .
 
-# Create a non-root user
-RUN groupadd -r app && useradd -r -g app -s /bin/bash -m app && chown -R app:app /app
-USER app
+# Note: Running as root for simplicity
 
 # Expose port 8001
 EXPOSE 8001
