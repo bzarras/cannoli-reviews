@@ -56,7 +56,6 @@ jobs:
         run: |
           echo "$EC2_SSH_PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
-          export EC2_SSH_PRIVATE_KEY_FILE=$(pwd)/private_key.pem
 
       - name: Install Ansible
         run: |
@@ -71,7 +70,7 @@ jobs:
             -e git_sha=$GIT_SHA \
             -e app_port=8001
         env:
-          EC2_SSH_PRIVATE_KEY_FILE: $(pwd)/private_key.pem
+          EC2_SSH_PRIVATE_KEY_FILE: ${{ github.workspace }}/private_key.pem
 
       - name: Revoke runner ip address
         run: |
