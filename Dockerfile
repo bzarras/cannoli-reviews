@@ -4,7 +4,7 @@ FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 WORKDIR /app
 
 # Install system dependencies including Python 3.11
-RUN dnf update -y && dnf install -y \
+RUN dnf install -y \
     python3.11 \
     python3.11-pip \
     python3.11-devel \
