@@ -15,6 +15,11 @@
         source: pull
         force_source: true
 
+    - name: Ensure app network exists
+      docker_network:
+        name: app_network
+        state: present
+
     - name: Stop existing container
       docker_container:
         name: "{{ app_name }}"
@@ -40,9 +45,4 @@
         volumes:
           - /app/data:/app/data
         networks:
-          - name: app_network
-
-    - name: Ensure app network exists
-      docker_network:
-        name: app_network
-        state: present 
+          - name: app_network 
