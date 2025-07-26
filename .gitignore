@@ -41,4 +41,4 @@ __pycache__
 .space
 
 # sqlite
-*.db
+cannolireviews_copy.db

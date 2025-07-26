@@ -1,0 +1,7 @@
+webserver:
+  hosts:
+    ec2_instance:
+      ansible_host: "{{ lookup('env', 'EC2_HOST') }}"
+      ansible_user: "{{ lookup('env', 'EC2_USER') }}"
+      ansible_ssh_private_key_file: "{{ lookup('env', 'EC2_SSH_PRIVATE_KEY_FILE') }}"
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no' 

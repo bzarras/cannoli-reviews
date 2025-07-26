@@ -1,0 +1,48 @@
+---
+- hosts: webserver
+  become: true
+  vars:
+    app_name: "cannoli-reviews"
+    app_port: 8001
+    docker_registry: "{{ lookup('env', 'DOCKER_REGISTRY', default='ghcr.io') }}"
+    git_sha: "{{ lookup('env', 'GIT_SHA') }}"
+    image_name: "{{ docker_registry }}/{{ lookup('env', 'GITHUB_REPOSITORY') }}:{{ git_sha }}"
+  
+  tasks:
+    - name: Pull latest Docker image
+      docker_image:
+        name: "{{ image_name }}"
+        source: pull
+        force_source: true
+
+    - name: Stop existing container
+      docker_container:
+        name: "{{ app_name }}"
+        state: stopped
+      ignore_errors: true
+
+    - name: Remove existing container
+      docker_container:
+        name: "{{ app_name }}"
+        state: absent
+      ignore_errors: true
+
+    - name: Start new container
+      docker_container:
+        name: "{{ app_name }}"
+        image: "{{ image_name }}"
+        ports:
+          - "{{ app_port }}:{{ app_port }}"
+        restart_policy: always
+        state: started
+        env:
+          DATABASE_URL: "{{ lookup('env', 'DATABASE_URL', default='sqlite:///cannolireviews.db') }}"
+        volumes:
+          - /app/data:/app/data
+        networks:
+          - name: app_network
+
+    - name: Ensure app network exists
+      docker_network:
+        name: app_network
+        state: present 
