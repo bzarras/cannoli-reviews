@@ -42,6 +42,7 @@
         state: started
         env:
           DATABASE_URL: "{{ lookup('env', 'DATABASE_URL', default='sqlite:///cannolireviews.db') }}"
+          ADMIN_TOKEN: "{{ lookup('env', 'ADMIN_TOKEN') }}"
         volumes:
           - /app/data:/app/data
         networks:
