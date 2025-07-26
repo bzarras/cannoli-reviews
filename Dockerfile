@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 public.ecr.aws/amazonlinux/amazonlinux:2023
+FROM public.ecr.aws/amazonlinux/amazonlinux:2023
 
 # Set working directory
 WORKDIR /app
