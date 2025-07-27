@@ -6,6 +6,9 @@ WORKDIR /app
 # Copy requirements first for better caching
 COPY requirements.txt .
 
+# Create a virtual environment
+RUN uv venv
+
 # Install Python dependencies
 RUN uv pip install --no-cache-dir -r requirements.txt
 
