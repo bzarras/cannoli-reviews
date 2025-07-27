@@ -7,8 +7,17 @@
     docker_registry: "{{ lookup('env', 'DOCKER_REGISTRY', default='ghcr.io') }}"
     git_sha: "{{ lookup('env', 'GIT_SHA') }}"
     image_name: "{{ docker_registry }}/{{ lookup('env', 'GITHUB_REPOSITORY') }}:{{ git_sha }}"
+    github_username: "{{ lookup('env', 'GITHUB_ACTOR') }}"
+    github_token: "{{ lookup('env', 'GITHUB_TOKEN') }}"
   
   tasks:
+    - name: Login to GitHub Container Registry
+      docker_login:
+        username: "{{ github_username }}"
+        password: "{{ github_token }}"
+        registry: "{{ docker_registry }}"
+        reauthorize: true
+
     - name: Pull latest Docker image
       docker_image:
         name: "{{ image_name }}"

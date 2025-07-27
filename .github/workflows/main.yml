@@ -46,7 +46,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ github.token }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -72,6 +72,7 @@ jobs:
             -e git_sha=$GIT_SHA
         env:
           EC2_SSH_PRIVATE_KEY_FILE: ${{ github.workspace }}/private_key.pem
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Revoke runner ip address
         run: |
