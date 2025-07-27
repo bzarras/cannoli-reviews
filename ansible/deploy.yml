@@ -17,7 +17,7 @@
 
     - name: Ensure app network exists
       docker_network:
-        name: app_network
+        name: cannoli_reviews_network
         state: present
 
     - name: Stop existing container
@@ -46,4 +46,4 @@
         volumes:
           - /app/data:/app/data
         networks:
-          - name: app_network 
+          - name: cannoli_reviews_network 

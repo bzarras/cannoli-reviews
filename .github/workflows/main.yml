@@ -69,9 +69,7 @@ jobs:
           ansible-playbook \
             -i ansible/inventory.yml \
             ansible/deploy.yml \
-            -e app_name=cannoli-reviews \
-            -e git_sha=$GIT_SHA \
-            -e app_port=8001
+            -e git_sha=$GIT_SHA
         env:
           EC2_SSH_PRIVATE_KEY_FILE: ${{ github.workspace }}/private_key.pem
 
